@@ -1,4 +1,4 @@
-﻿# NetLogo Functional Programming Extension (phys)
+﻿# NetLogo Functional Programming Extension (fp)
 
 ## Introduction:
 
