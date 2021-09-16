@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ivy-report.xsl"?>
+<ivy-report version="1.0">
+	<info
+		organisation="default"
+		module="fp_2.12"
+		revision="0.1-SNAPSHOT"
+		conf="compile-internal"
+		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, pom, scala-tool"
+		date="20201005102421"/>
+	<dependencies>
+		<module organisation="org.nlogo" name="netlogo">
+			<revision name="6.1.1" status="release" pubdate="20191106135433" resolver="bintray-content/netlogo-NetLogo-JVM" artresolver="bintray-content/netlogo-NetLogo-JVM" homepage="" downloaded="true" searched="true" default="false" conf="default, compile, runtime, default(compile), master" position="1">
+				<license name="GPL-2.0" url="http://opensource.org/licenses/GPL-2.0"/>
+				<metadata-artifact status="successful" details="" size="6133" time="479" location="/Users/old/.ivy2/cache/org.nlogo/netlogo/ivy-6.1.1.xml" searched="true" original-local-location="/Users/old/.ivy2/cache/org.nlogo/netlogo/ivy-6.1.1.xml.original" origin-is-local="false" origin-location="https://dl.bintray.com/content/netlogo/NetLogo-JVM/org/nlogo/netlogo/6.1.1/netlogo-6.1.1.pom"/>
+				<caller organisation="default" name="fp_2.12" conf="compile-internal, compile, provided, optional" rev="6.1.1" rev-constraint-default="6.1.1" rev-constraint-dynamic="6.1.1" callerrev="0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="netlogo" type="jar" ext="jar" status="no" details="" size="11594699" time="0" location="/Users/old/.ivy2/cache/org.nlogo/netlogo/jars/netlogo-6.1.1.jar">
+						<origin-location is-local="false" location="https://dl.bintray.com/content/netlogo/NetLogo-JVM/org/nlogo/netlogo/6.1.1/netlogo-6.1.1.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scala-lang" name="scala-library">
+			<revision name="2.12.0" status="release" pubdate="20161028180730" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" extra-info.apiURL="http://www.scala-lang.org/api/2.12.0/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="0">
+				<license name="BSD 3-Clause" url="http://www.scala-lang.org/license.html"/>
+				<metadata-artifact status="no" details="" size="2653" time="0" location="/Users/old/.ivy2/cache/org.scala-lang/scala-library/ivy-2.12.0.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.0/scala-library-2.12.0.pom"/>
+				<caller organisation="default" name="fp_2.12" conf="compile-internal, compile, provided, optional" rev="2.12.0" rev-constraint-default="2.12.0" rev-constraint-dynamic="2.12.0" callerrev="0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="scala-library" type="jar" ext="jar" status="no" details="" size="5451017" time="0" location="/Users/old/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.12.0.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.0/scala-library-2.12.0.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+	</dependencies>
+</ivy-report>
