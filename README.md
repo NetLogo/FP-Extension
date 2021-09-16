@@ -32,7 +32,7 @@ In general, anything you can do with the functional programming extension in Net
 
 ## Primitives:
 
-[`fp:take`](#fp:take) [`fp:drop`](#fp:drop) [`fp:scan`](#fp:scan)[`fp:compose`](#fp:compose)[`fp:curry`](#fp:curry)[`fp:find-indices`](#fp:find-indices)[`fp:find`](#fp:find)[`fp:flatten`](#fp:flatten) [`fp:zip`](#fp:zip)[`fp:unzip`](#fp:unzip)
+[`fp:take`](###fp:take) [`fp:drop`](###fp:drop) [`fp:scan`](###fp:scan) [`fp:compose`](###fp:compose) [`fp:curry`](###fp:curry) [`fp:find-indices`](###fp:find-indices) [`fp:find`](###fp:find)[`fp:flatten`](###fp:flatten) [`fp:zip`](###fp:zip) [`fp:unzip`](###fp:unzip)
 
 ---
 ### fp:take
@@ -93,6 +93,7 @@ fp:scan [[a b] -> a] [1 2 3 4 5]
  ### fp:compose
  
 __`fp:compose`__ _`reporter1 reporter2`_
+
 (__`fp:compose`__ _`reporter1 ...`_) 
 
 Accepts a minimum of two reporters and returns a single reporter which combines the given reporters. When the resulting reporter is called, the last given reporter is evaluated and its result is passed as the argument to the previous reporter until the first reporter is evaluated, producing the output. Every given reporter except for the last one must be unary (accept only one argument).
@@ -115,6 +116,7 @@ let g (fp:compose [x -> x * 10] abs +)
 ### fp:curry
 
 __`fp:curry`__ _`reporter value`_
+
 (__`fp:curry`__ _`reporter value1 ...`_) 
 
 Accepts a reporter and at least one value. Returns the reporter such that the given value (or values) is now fixed to the first  argument (or first n arguments) of the given reporter. This enables the user to reduce the number of arguments the given reporter accepts by fixing or partially applying the given values to the first arguments of the reporter. If the number of values given exceeds the number of arguments the reporter can take, only the first n values will be applied where n is the arity of the reporter.
@@ -189,6 +191,7 @@ fp:flatten [[[1 [2] 3]][[4 [5]] [6]]]
 ### fp:zip
 
 __`fp:zip`__ _`list1 list2`_
+
 (__`fp:zip`__ _`list1 ...`_)
 
 Accepts a minimum of one list as its argument and returns a list of tuples where the _n_<sup>th</sup> item in each sublist of the given list are paired together with each other, creating a new list of tuples from the given lists. If the given lists are not the same length, the number of tuples returned will be the length of the shortest given list.
