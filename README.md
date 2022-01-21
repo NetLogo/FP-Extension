@@ -32,7 +32,7 @@ In general, anything you can do with the functional programming extension in Net
 
 ## Primitives:
 
-[`fp:take`](###fp:take) [`fp:drop`](###fp:drop) [`fp:scan`](###fp:scan) [`fp:compose`](###fp:compose) [`fp:curry`](###fp:curry) [`fp:find-indices`](###fp:find-indices) [`fp:find`](###fp:find)[`fp:flatten`](###fp:flatten) [`fp:zip`](###fp:zip) [`fp:unzip`](###fp:unzip)
+[`fp:take`](###fp:take) [`fp:drop`](###fp:drop) [`fp:scan`](###fp:scan) [`fp:compose`](###fp:compose) [`fp:pipe`](###fp:pipe) [`fp:curry`](###fp:curry) [`fp:find-indices`](###fp:find-indices) [`fp:find`](###fp:find)[`fp:flatten`](###fp:flatten) [`fp:zip`](###fp:zip) [`fp:unzip`](###fp:unzip)
 
 ---
 ### fp:take
@@ -76,7 +76,8 @@ fp:drop 5 (range 10)
 
  __`fp:scan`__ _`reporter list`_ 
 
-Accepts a  binary reporter (arity 2) and a list as parameters and returns a list consisting of the value for each element in _list_ for that _reporter_. It returns each iteration for the _reporter_ in the _list_.
+Accepts a  binary reporter (arity 2) and a list as parameters and will use the _reporter_ to collapse the elements from _list_ to return a list consisting of the running total from each element. That is, the first two elements in _list_ are operated upon by the _reporter_ and the resultant of that operation becomes the first element of the list returned. This value is then used along with the next element in the _list_ to obtain the second element in the resulting list and so on until the entire _list_ is used.
+
 ##### Example:
 ```
 ; Applies the addition operation to the given list starting from the beginning and returns a list consisiting of all the resulting values 
@@ -107,6 +108,29 @@ let f fp:compose [x -> x / 2] [x -> x + 5]
 
 ; Combines the three given reporters. The resulting reporter first adds the given arguments, then takes the absolute value of the addition and multiplies it by 10.
 let g (fp:compose [x -> x * 10] abs +)
+(runresult g -3 2) 
+=> 10
+```
+
+---
+
+ ### fp:pipe
+ 
+__`fp:pipe`__ _`reporter1 reporter2`_
+
+(__`fp:pipe`__ _`reporter1 ...`_) 
+
+This primitive is the same as the compose primitive, except the reporters are evaluated in reverse order. Just like compose, it accepts a minimum of two reporters and returns a single reporter which combines the given reporters. When the resulting reporter is called, the first given reporter is evaluated and its result is passed as the argument to the next reporter until the last reporter is evaluated, producing the output. Every given reporter except for the first one must be unary (accept only one argument).
+
+##### Example:
+```
+; Combines the two given reporters. The resulting reporter first divides x by 2 and then adds 5.
+let f fp:pipe [x -> x / 2] [x -> x + 5]
+(runresult f 4)
+=> 7
+
+; Combines the three given reporters. The resulting reporter first adds the given arguments, then multiplies the result by 10 and finally takes the absolute value of the result.
+let g (fp:pipe + [x -> x * 10] abs)
 (runresult g -3 2) 
 => 10
 ```
