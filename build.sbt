@@ -1,5 +1,11 @@
 enablePlugins(org.nlogo.build.NetLogoExtension)
 
+name := "fp"
+
+version := "0.0.1"
+
+isSnapshot := true
+
 netLogoExtName      := "fp"
 
 netLogoClassManager := "FunctionalProgrammingExtension"
