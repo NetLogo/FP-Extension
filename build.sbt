@@ -18,5 +18,4 @@ scalacOptions          ++= Seq("-deprecation", "-unchecked", "-Xfatal-warnings",
 netLogoTarget :=
   org.nlogo.build.NetLogoExtension.directoryTarget(baseDirectory.value)
 
-resolvers      += "netlogo" at "https://dl.cloudsmith.io/public/netlogo/netlogo/maven/"
 netLogoVersion := "6.2.0-d27b502"
