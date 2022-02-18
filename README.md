@@ -26,7 +26,7 @@ In general, anything you can do with the functional programming extension in Net
 
 ## Demo Model:
 
- [Functional Programming Example](https://https://raw.githubusercontent.com/can-gurkan/netlogo_fp_extension/main/FP%20Example.nlogo)
+ [Functional Programming Example](https://raw.githubusercontent.com/NetLogo/FP-Extension/main/FP%20Example.nlogo)
 
 ---
 
