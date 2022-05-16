@@ -1,4 +1,4 @@
-FPTake
+Take
   extensions [fp]
   fp:take 5 (range 10) => [0 1 2 3 4]
   fp:take 5 ["a" "b" "c" "d" "e" "f" "g" "h"] => ["a" "b" "c" "d" "e"]
@@ -8,7 +8,7 @@ FPTake
   fp:take 1.5 ["a" "b" "c"] => ["a"]
   fp:take -1 [1 2 3] => ERROR Extension exception: First argument must be a positive number.
 
-FPDrop
+Drop
   extensions [fp]
   fp:drop 5 (range 10) => [5 6 7 8 9]
   fp:drop 5 ["a" "b" "c" "d" "e" "f" "g" "h"] => ["f" "g" "h"]
@@ -17,14 +17,14 @@ FPDrop
   fp:drop 5 [] => []
   fp:drop -1.5 [1 2 3] => ERROR Extension exception: First argument must be a positive number.
 
-FPScan
+Scan
   extensions [fp]
   fp:scan [[a b] -> a + b] [1 2 3 4 5] => [1 3 6 10 15]
   fp:scan [[a b] -> a * b] [1 2 3 4 5] => [1 2 6 24 120]
   fp:scan [[a b] -> a] [1 2 3 4 5] => [1 1 1 1 1]
   fp:scan + [1 2 3 4 5] => [1 3 6 10 15]
 
-FPCompose
+Compose
   extensions [fp]
   (runresult (fp:compose [x -> x * 2] [x -> x + 2]) 3) => 10
   (runresult (fp:compose [x -> x * 2] [x -> x + 2] [x -> x + 3]) 3) => 16
@@ -35,7 +35,7 @@ FPCompose
   (runresult (fp:compose [x -> abs x] abs [[x y] -> x + y]) 3 2) => 5
   (runresult (fp:compose [[x y] -> x * y * 2] [x -> x + 2]) 3) => ERROR Extension exception: One or more reporters have invalid number of arguments.
 
-FPPipe
+Pipe
   extensions [fp]
   (runresult (fp:pipe [x -> x * 2] [x -> x + 2]) 3) => 8
   (runresult (fp:pipe [x -> x * 2] [x -> x + 2] [x -> x + 3]) 3) => 11
@@ -46,7 +46,7 @@ FPPipe
   (runresult (fp:pipe [[x y] -> x * y * 2] [x -> x + 2]) 3 2) => 14
   (runresult (fp:pipe [x -> abs x] abs [[x y] -> x + y]) 3 2) => ERROR Extension exception: One or more reporters have invalid number of arguments.
 
-FPCurry
+Curry
   extensions [fp]
   globals [f]
   to-report g [x y z] report x + y + z end
@@ -58,7 +58,7 @@ FPCurry
   (runresult (fp:curry [[x y] -> x + y] 1 2)) => 3
 
 
-FPFindIndices
+FindIndices
   extensions [fp]
   fp:find-indices [x -> x < 3] [2] => [0]
   fp:find-indices [x -> x = 2] [1 2 1 2] => [1 3]
@@ -66,14 +66,14 @@ FPFindIndices
   fp:find-indices [x -> member? 2 x] [[1 0 3] [2 4 true] [1] [5 5 2]] => [1 3]
   fp:find-indices [x -> x + 1] [1 2 3] => ERROR Extension exception: The reporter does not return a boolean value.
 
-FPFind
+Find
   extensions [fp]
   fp:find [x -> x < 3] [2] => 2
   fp:find [x -> x = 2] [1 2 1 2] => 2
   fp:find [ s -> first s = "t" ] ["hi" "there" "everyone"] => "there"
   fp:find [x -> "yes"] [1 2 3] => ERROR Extension exception: The reporter does not return a boolean value.
 
-FPZip
+Zip
   extensions [fp]
   fp:zip [1 2] [4 5] => [[1 4] [2 5]]
   fp:zip [1 2 3] [4 5 6] => [[1 4] [2 5] [3 6]]
@@ -82,7 +82,7 @@ FPZip
   fp:zip [1 2 3 4] [5 6] [9 10 11 12] => [[1 5 9] [2 6 10]]
   fp:zip [1 2 3 4 5] ["a" "b" "c"] => [[1 "a"] [2 "b"] [3 "c"]]
 
-FPUnzip
+Unzip
   extensions [fp]
   fp:unzip [[1 4] [2 5]] => [[1 2] [4 5]]
   fp:unzip [[1 4] [2 5] [3 6]] => [[1 2 3] [4 5 6]]
@@ -93,7 +93,7 @@ FPUnzip
   fp:unzip [[1 2 3 4]] => [[1 2 3 4]]
   fp:unzip [1 2 3 4] => ERROR Extension exception: Input must be a list of lists.
 
-FPFlatten
+Flatten
   extensions [fp]
   fp:flatten [[1 2 3][4 5]] => [1 2 3 4 5]
   fp:flatten [[[1 [2] 3]][[4 [5]] [6]]] => [1 2 3 4 5 6]
