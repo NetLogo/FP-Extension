@@ -1,23 +1,16 @@
-enablePlugins(org.nlogo.build.NetLogoExtension)
+import org.nlogo.build.NetLogoExtension
 
-name := "fp"
+enablePlugins(NetLogoExtension)
 
-version := "1.0.0"
-
+name       := "fp"
+version    := "1.0.0"
 isSnapshot := true
 
-netLogoExtName := "fp"
+netLogoClassManager := "org.nlogo.extensions.fp.FunctionalProgrammingExtension"
+netLogoVersion      := "6.2.2-5434ea7"
+netLogoZipExtras    ++= Seq(baseDirectory.value / "FP Example.nlogo")
 
-netLogoClassManager := "FunctionalProgrammingExtension"
-
-netLogoZipSources := false
-
-netLogoVersion := "6.2.0-d27b502"
-
-scalaVersion := "2.12.0"
-
-scalaSource in Compile := baseDirectory.value / "src"
-
-scalacOptions ++= Seq("-deprecation", "-unchecked", "-Xfatal-warnings", "-encoding", "us-ascii")
-
-netLogoTarget := org.nlogo.build.NetLogoExtension.directoryTarget(baseDirectory.value)
+scalaVersion          := "2.12.12"
+scalacOptions        ++= Seq("-deprecation", "-unchecked", "-Xfatal-warnings", "-encoding", "us-ascii")
+Compile / scalaSource := baseDirectory.value / "src" / "main"
+Test    / scalaSource := baseDirectory.value / "src" / "test"

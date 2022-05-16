@@ -1,3 +1,5 @@
+package org.nlogo.extensions.fp
+
 import org.nlogo.{agent, api, core, nvm}
 import core.Syntax._
 import api.ScalaConversions._
@@ -346,4 +348,3 @@ object FlattenList extends api.Reporter {
     newList.toLogoList
   }
 }
-
