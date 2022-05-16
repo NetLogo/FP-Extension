@@ -298,26 +298,20 @@ object UnzipList extends api.Reporter {
         maxLength = lk.asInstanceOf[LogoList].length
       }
     }
-    // If there is only one enclosed list,  return it as it is
-    if (l.length == 1) {
-      l
-    } else {
-      // If not, pair the ith items together
-      var result = Array[Any]()
-      var subresult = Array[Any]()
-      var count = 0
-      for (i <- 0 until maxLength) {
-        subresult = Array[Any]()
-        l.foreach { lj =>
-          if (lj.asInstanceOf[LogoList].length > i) {
-            subresult = subresult :+ lj.asInstanceOf[LogoList](i)
-          }
+    var result = Array[Any]()
+    var subresult = Array[Any]()
+    var count = 0
+    for (i <- 0 until maxLength) {
+      subresult = Array[Any]()
+      l.foreach { lj =>
+        if (lj.asInstanceOf[LogoList].length > i) {
+          subresult = subresult :+ lj.asInstanceOf[LogoList](i)
         }
-        result = result :+ subresult
-        count += 1
       }
-      result.toLogoList
+      result = result :+ subresult
+      count += 1
     }
+    result.toLogoList
   }
 }
 
