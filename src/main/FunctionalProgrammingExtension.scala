@@ -6,7 +6,7 @@ import api.ScalaConversions._
 import org.nlogo.api.{AnonymousReporter, Context, ExtensionException}
 import org.nlogo.core.{AgentKind, LogoList, Reporter, Syntax}
 
-import scala.collection.immutable._
+import scala.collection.immutable.{ Stream }
 import scala.collection.mutable.ListBuffer
 
 class FunctionalProgrammingExtension extends api.DefaultClassManager {
@@ -22,6 +22,8 @@ class FunctionalProgrammingExtension extends api.DefaultClassManager {
     manager.addPrimitive("zip", ZipList)
     manager.addPrimitive("unzip", UnzipList)
     manager.addPrimitive("flatten", FlattenList)
+    manager.addPrimitive("iterate", Iterate.ToList)
+    manager.addPrimitive("iterate-last", Iterate.ToLast)
   }
 }
 
@@ -340,5 +342,40 @@ object FlattenList extends api.Reporter {
 
     flatten(l)
     newList.toLogoList
+  }
+}
+
+object Iterate {
+  private def createStream(prim: String, args: Array[api.Argument], context: api.Context): Stream[AnyRef] = {
+    val function     = args(0).getReporter
+    val initialValue = args(1)
+    if (function.syntax.minimum != 1 || function.syntax.isInfix) {
+      throw new ExtensionException(s"The reporter given to `$prim` should take a single argument.")
+    }
+    Stream.iterate(initialValue.get)( (a) => function.report(context, Array(a)) )
+  }
+
+  object ToList extends api.Reporter {
+    override def getSyntax =
+      reporterSyntax(right = List(ReporterType, WildcardType, NumberType), ret = ListType)
+
+    def report(args: Array[api.Argument], context: api.Context): AnyRef = {
+      val stream      = Iterate.createStream("iterate", args, context)
+      val repetitions = args(2).getIntValue
+      val result      = stream.take(repetitions + 1)
+      result.toLogoList
+    }
+  }
+
+  object ToLast extends api.Reporter {
+    override def getSyntax =
+      reporterSyntax(right = List(ReporterType, WildcardType, NumberType), ret = WildcardType)
+
+    def report(args: Array[api.Argument], context: api.Context): AnyRef = {
+      val stream      = Iterate.createStream("iterate-last", args, context)
+      val repetitions = args(2).getIntValue
+      val result      = stream.apply(repetitions)
+      result
+    }
   }
 }
