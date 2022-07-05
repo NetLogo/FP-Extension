@@ -32,7 +32,7 @@ In general, anything you can do with the functional programming extension in Net
 
 ## Primitives:
 
-[`fp:take`](###fp:take) [`fp:drop`](###fp:drop) [`fp:scan`](###fp:scan) [`fp:compose`](###fp:compose) [`fp:pipe`](###fp:pipe) [`fp:curry`](###fp:curry) [`fp:find-indices`](###fp:find-indices) [`fp:find`](###fp:find)[`fp:flatten`](###fp:flatten) [`fp:zip`](###fp:zip) [`fp:unzip`](###fp:unzip) [`fp:iterate`](###fp:iterate) [`fp:iterate-last`](###fp:iterate-last)
+[`fp:take`](###fp:take) [`fp:drop`](###fp:drop) [`fp:scan`](###fp:scan) [`fp:compose`](###fp:compose) [`fp:pipe`](###fp:pipe) [`fp:curry`](###fp:curry) [`fp:find-indices`](###fp:find-indices) [`fp:find`](###fp:find) [`fp:flatten`](###fp:flatten) [`fp:zip`](###fp:zip) [`fp:unzip`](###fp:unzip) [`fp:iterate`](###fp:iterate) [`fp:iterate-last`](###fp:iterate-last)
 
 ---
 ### fp:take
@@ -256,44 +256,26 @@ fp:unzip [[1 "a"] [2 "b"] [3 "c"] [4]]
 ### fp:iterate-last
 
  __`fp:iterate`__ _`reporter`_ _`initial-value`_ _`repetitions`_
+
  __`fp:iterate-last`__ _`reporter`_ _`initial-value`_ _`repetitions`_
 
-Runs the reporter on the given initial value a number of times equal to the given repetitions.  If you run `fp:iterate` it will report the results as a list, including the original intial value.  If you run `fp:iterate-last` only the final value will be reporter.  It is recommended to use `fp:iterate-last` instead of `last fp:iterate` when possible as the latter will generate an unneeded intermediate list which could slow a model down for a large number of repetitions.
+Runs the reporter on the given initial value a number of times equal to the given repetitions.  If you run `fp:iterate` it will report the results as a list, including the original intial value.  If you run `fp:iterate-last` only the final value will be reported.  It is recommended to use `fp:iterate-last` instead of `last fp:iterate` when possible as the latter will generate an intermediate list which could slow a model down when using a large number of repetitions.
 
 The reporter given must take a single argument or else a runtime error will be generated.
 
 ##### Examples:
 ```
-; Create a list with the first 6 powers of two:
+; Calculate the first 6 powers of two:
 fp:iterate [[a] -> a * 2] 1 5 => [1 2 4 8 16 32]
 fp:iterate-last [[a] -> a * 2] 1 5 => 32
 
-; Create a list with more exclamation points:
+; Add more and more exclamation points:
 fp:iterate [[a] -> (word a "!")] "hey" 5 => ["hey" "hey!" "hey!!" "hey!!!" "hey!!!!" "hey!!!!!"]
-fp:iterate [[a] -> (word a "!")] "hey" 5 => "hey!!!!!"
+fp:iterate-last [[a] -> (word a "!")] "hey" 5 => "hey!!!!!"
 
-; Create a list with alternating true/false values:
+; Alternate true/false values:
 fp:iterate [[a] -> not a] true 5 => [true false true false true false]
 fp:iterate-last [[a] -> not a] true 5 => false
-```
-
----
-
-### fp:unzip
-
- __`fp:unzip`__ _`list`_
-
-This is similar to zip, except it accepts a list of lists as its argument. Returns a list of tuples where the _n_<sup>th</sup> item the given list of lists are paired together with each other, creating a new list of tuples from the given list of lists. If the given list contains lists of different lengths, the length of the tuples in the returned list will be different accordingly.
-
-##### Example:
-```
-; Create a new list from the given list of lists where the ith items in the sublists are paired together
-fp:unzip [[1 4] [2 5] [3 6]]
-=> [[1 2 3] [4 5 6]]
-
-; Create a new list from the given list of lists where the ith items in the sublists are paired together. In this case the sublists in the given list are of different lengths, so the sublists in the list that is returned are also of different lengths.
-fp:unzip [[1 "a"] [2 "b"] [3 "c"] [4]]
-=> [[1 2 3 4] ["a" "b" "c"]]
 ```
 
 ---
