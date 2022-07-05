@@ -1,4 +1,5 @@
-fp.jar
+*.zip
+*.jar
 target/
 .bundledFiles
 extensions/
