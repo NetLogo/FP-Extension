@@ -3,7 +3,7 @@ import org.nlogo.build.NetLogoExtension
 enablePlugins(NetLogoExtension)
 
 name       := "fp"
-version    := "1.0.0"
+version    := "1.1.0"
 isSnapshot := true
 
 netLogoClassManager := "org.nlogo.extensions.fp.FunctionalProgrammingExtension"
