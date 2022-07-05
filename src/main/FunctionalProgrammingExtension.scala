@@ -1,12 +1,12 @@
 package org.nlogo.extensions.fp
 
-import org.nlogo.{agent, api, core, nvm}
+import org.nlogo.{ api, core }
 import core.Syntax._
 import api.ScalaConversions._
-import org.nlogo.api.{AnonymousReporter, Context, ExtensionException}
-import org.nlogo.core.{AgentKind, LogoList, Reporter, Syntax}
+import org.nlogo.api.{ AnonymousReporter, Context, ExtensionException }
+import org.nlogo.core.{ LogoList, Syntax }
 
-import scala.collection.immutable.{ Stream }
+import scala.collection.immutable.Stream
 import scala.collection.mutable.ListBuffer
 
 class FunctionalProgrammingExtension extends api.DefaultClassManager {
@@ -183,7 +183,7 @@ object FindIndices extends api.Reporter {
     val f = args(0).getReporter
     val l = args(1).getList
     val it = l.iterator
-    var result = new ListBuffer[Int]()
+    val result = new ListBuffer[Int]()
     var i = 0
     while (it.hasNext) {
       val fi = f.report(context, Array(l(i)))
