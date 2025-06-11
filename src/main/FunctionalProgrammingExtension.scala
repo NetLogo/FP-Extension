@@ -10,7 +10,7 @@ import scala.collection.immutable.Stream
 import scala.collection.mutable.ListBuffer
 
 class FunctionalProgrammingExtension extends api.DefaultClassManager {
-  def load(manager: api.PrimitiveManager) {
+  def load(manager: api.PrimitiveManager): Unit = {
     manager.addPrimitive("take", TakeList)
     manager.addPrimitive("drop", DropList)
     manager.addPrimitive("scan", ScanList)
@@ -197,7 +197,7 @@ object FindIndices extends api.Reporter {
       it.next()
       i += 1
     }
-    result.toLogoList
+    LogoList.fromList(result.toList.map((i) => Double.box(i)))
   }
 }
 
@@ -346,13 +346,13 @@ object FlattenList extends api.Reporter {
 }
 
 object Iterate {
-  private def createStream(prim: String, args: Array[api.Argument], context: api.Context): Stream[AnyRef] = {
+  private def createStream(prim: String, args: Array[api.Argument], context: api.Context): LazyList[AnyRef] = {
     val function     = args(0).getReporter
     val initialValue = args(1)
     if (function.syntax.minimum != 1 || function.syntax.isInfix) {
       throw new ExtensionException(s"The reporter given to `$prim` should take a single argument.")
     }
-    Stream.iterate(initialValue.get)( (a) => function.report(context, Array(a)) )
+    LazyList.iterate(initialValue.get)( (a) => function.report(context, Array(a)) )
   }
 
   object ToList extends api.Reporter {
