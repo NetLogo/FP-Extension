@@ -24,6 +24,7 @@ class FunctionalProgrammingExtension extends api.DefaultClassManager {
     manager.addPrimitive("flatten", FlattenList)
     manager.addPrimitive("iterate", Iterate.ToList)
     manager.addPrimitive("iterate-last", Iterate.ToLast)
+    manager.addPrimitive("apply", Apply)
   }
 }
 
@@ -378,4 +379,23 @@ object Iterate {
       result
     }
   }
+}
+
+object Apply extends api.Reporter {
+    override def getSyntax =
+      reporterSyntax(right = List(ReporterType, ListType), ret = WildcardType)
+
+    def report(args: Array[api.Argument], context: api.Context): AnyRef = {
+      val function     = args(0).getReporter
+      val functionArgs = args(1).getList.toArray
+      if (function.syntax.totalMinimum > functionArgs.length) {
+        val arguments = s"${function.syntax.totalMinimum} argument${if (function.syntax.totalMinimum == 1) { "" } else { "s" }}"
+        val elements  = s"${functionArgs.length} element${if (functionArgs.length == 1) { "" } else { "s" }}"
+        val message = s"The reporter given to `fp:apply` requires at least $arguments but the list only has $elements."
+        throw new ExtensionException(message)
+      }
+      val result       = function.report(context, functionArgs)
+      return result
+    }
+
 }
