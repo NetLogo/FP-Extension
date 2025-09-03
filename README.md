@@ -32,9 +32,25 @@ In general, anything you can do with the functional programming extension in Net
 
 ## Primitives:
 
-[`fp:take`](###fp:take) [`fp:drop`](###fp:drop) [`fp:scan`](###fp:scan) [`fp:compose`](###fp:compose) [`fp:pipe`](###fp:pipe) [`fp:curry`](###fp:curry) [`fp:find-indices`](###fp:find-indices) [`fp:find`](###fp:find) [`fp:flatten`](###fp:flatten) [`fp:zip`](###fp:zip) [`fp:unzip`](###fp:unzip) [`fp:iterate`](###fp:iterate) [`fp:iterate-last`](###fp:iterate-last)
+[`fp:apply`](###fp:apply) [`fp:take`](###fp:take) [`fp:drop`](###fp:drop) [`fp:scan`](###fp:scan) [`fp:compose`](###fp:compose) [`fp:pipe`](###fp:pipe) [`fp:curry`](###fp:curry) [`fp:find-indices`](###fp:find-indices) [`fp:find`](###fp:find) [`fp:flatten`](###fp:flatten) [`fp:zip`](###fp:zip) [`fp:unzip`](###fp:unzip) [`fp:iterate`](###fp:iterate) [`fp:iterate-last`](###fp:iterate-last)
 
 ---
+
+### fp:apply
+
+ __`fp:apply `__  _`reporter list`_
+
+Accepts a _reporter_ and a _list_. Uses the values of the _list_ as the arguments for the _reporter_ and returns the result.  If the _list_ does not contain enough elements for the reporter, an extension error will occur.
+
+##### Examples:
+```
+; a simple example, adding two numbers from a list together.
+fp:apply [[a b] -> a + b] [10 5] => 15
+
+; a more involved example, showing how `fp:apply` can be used on a list of lists
+map [l -> fp:apply word l] [[1 2 3] [4 5] [6 7 8 9]] => ["123" "45" "6789"]
+```
+
 ### fp:take
 
  __`fp:take `__  _`number list`_
