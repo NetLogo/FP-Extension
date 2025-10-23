@@ -6,7 +6,6 @@ import api.ScalaConversions._
 import org.nlogo.api.{ AnonymousReporter, Context, ExtensionException }
 import org.nlogo.core.{ LogoList, Syntax }
 
-import scala.collection.immutable.Stream
 import scala.collection.mutable.ListBuffer
 
 class FunctionalProgrammingExtension extends api.DefaultClassManager {
@@ -303,7 +302,6 @@ object UnzipList extends api.Reporter {
     }
     var result = Array[Any]()
     var subresult = Array[Any]()
-    var count = 0
     for (i <- 0 until maxLength) {
       subresult = Array[Any]()
       l.foreach { lj =>
@@ -312,7 +310,6 @@ object UnzipList extends api.Reporter {
         }
       }
       result = result :+ subresult
-      count += 1
     }
     result.toLogoList
   }
