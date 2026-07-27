@@ -32,7 +32,7 @@ In general, anything you can do with the functional programming extension in Net
 
 ## Primitives:
 
-[`fp:apply`](###fp:apply) [`fp:take`](###fp:take) [`fp:drop`](###fp:drop) [`fp:scan`](###fp:scan) [`fp:compose`](###fp:compose) [`fp:pipe`](###fp:pipe) [`fp:curry`](###fp:curry) [`fp:find-indices`](###fp:find-indices) [`fp:find`](###fp:find) [`fp:flatten`](###fp:flatten) [`fp:zip`](###fp:zip) [`fp:unzip`](###fp:unzip) [`fp:iterate`](###fp:iterate) [`fp:iterate-last`](###fp:iterate-last)
+[`fp:apply`](###fp:apply) [`fp:take`](###fp:take) [`fp:drop`](###fp:drop) [`fp:scan`](###fp:scan) [`fp:compose`](###fp:compose) [`fp:pipe`](###fp:pipe) [`fp:curry`](###fp:curry) [`fp:find-indices`](###fp:find-indices) [`fp:find`](###fp:find) [`fp:flatten`](###fp:flatten) [`fp:zip`](###fp:zip) [`fp:unzip`](###fp:unzip) [`fp:outer`](###fp:outer) [`fp:iterate`](###fp:iterate) [`fp:iterate-last`](###fp:iterate-last)
 
 ---
 
@@ -264,6 +264,31 @@ fp:unzip [[1 4] [2 5] [3 6]]
 ; Create a new list from the given list of lists where the ith items in the sublists are paired together. In this case the sublists in the given list are of different lengths, so the sublists in the list that is returned are also of different lengths.
 fp:unzip [[1 "a"] [2 "b"] [3 "c"] [4]]
 => [[1 2 3 4] ["a" "b" "c"]]
+```
+
+---
+
+### fp:outer
+
+ __`fp:outer`__ _`reporter list1 list2`_
+
+(__`fp:outer`__ _`reporter list1 list2 ...`_)
+
+Accepts a _reporter_ and two or more lists, and returns their outer product: a nested list whose _(i, j)_<sup>th</sup> element is the result of calling _reporter_ with the _i_<sup>th</sup> item of _list1_ and the _j_<sup>th</sup> item of _list2_. Given _n_ lists, the result is nested _n_ levels deep and the _reporter_ is called with _n_ arguments, one drawn from each list in the order the lists were given. The lists do not need to be the same length. If the _reporter_ requires more arguments than there are lists, an extension error will occur; if it accepts fewer, the extra arguments are ignored.
+
+##### Examples:
+```
+; Every sum of an item of the first list with an item of the second
+fp:outer [[a b] -> a + b] [1 2 3] [10 20]
+=> [[11 21] [12 22] [13 23]]
+
+; A multiplication table
+fp:outer * [1 2 3] [1 2 3]
+=> [[1 2 3] [2 4 6] [3 6 9]]
+
+; Three lists, giving a result nested three levels deep
+(fp:outer [[a b c] -> a + b + c] [1 2] [10 20] [100 200])
+=> [[[111 211] [121 221]] [[112 212] [122 222]]]
 ```
 
 ---

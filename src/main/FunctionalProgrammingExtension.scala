@@ -24,6 +24,7 @@ class FunctionalProgrammingExtension extends api.DefaultClassManager {
     manager.addPrimitive("iterate", Iterate.ToList)
     manager.addPrimitive("iterate-last", Iterate.ToLast)
     manager.addPrimitive("apply", Apply)
+    manager.addPrimitive("outer", Outer)
   }
 }
 
@@ -395,4 +396,35 @@ object Apply extends api.Reporter {
       return result
     }
 
+}
+
+
+// Takes a reporter and two or more lists
+// Returns the outer product of the lists: a nested list where the (i, j, ...)th
+// element is the result of applying the reporter to the ith, jth, ... items
+object Outer extends api.Reporter {
+  override def getSyntax =
+    reporterSyntax(right = List(ReporterType, ListType, ListType | RepeatableType), defaultOption = Some(3),
+      minimumOption = Some(3), ret = ListType)
+
+  def report(args: Array[api.Argument], context: api.Context): AnyRef = {
+    val function = args(0).getReporter
+    val lists    = args.drop(1).map(_.getList).toList
+    val minimum  = function.syntax.totalMinimum
+
+    if (minimum > lists.length) {
+      val arguments = s"$minimum argument${if (minimum == 1) { "" } else { "s" }}"
+      val listCount = s"${lists.length} list${if (lists.length == 1) { " was" } else { "s were" }} given"
+      val message   = s"The reporter given to `fp:outer` requires at least $arguments but only $listCount."
+      throw new ExtensionException(message)
+    }
+
+    def build(prefix: Vector[AnyRef], remaining: List[LogoList]): AnyRef =
+      remaining match {
+        case Nil       => function.report(context, prefix.toArray)
+        case l :: rest => LogoList.fromList(l.toList.map( (x) => build(prefix :+ x, rest) ))
+      }
+
+    build(Vector(), lists)
+  }
 }
